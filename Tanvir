@@ -1,0 +1,89 @@
+//Implementation of circuler linked list with sentinal valu
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node C_NODE;
+
+struct node {
+    int value;
+    C_NODE *next;
+};
+
+void print(C_NODE *sentinal);
+
+int main() {
+    C_NODE *sentinal = NULL, *temp = NULL, *current = NULL;
+    int choice = 1;
+    unsigned int data;
+    
+    sentinal = (C_NODE*)malloc(sizeof(C_NODE));
+    if(sentinal != NULL) {
+        sentinal->value = -999;
+        sentinal->next = NULL;
+    }
+    
+    while(choice) {
+        temp = (C_NODE*)malloc(sizeof(C_NODE));
+
+        printf("\nWe have got address %x\n\n", temp);
+
+        printf("Enter a positive integer number for insert into your Linked List: ");
+        scanf("%u", &data);
+
+        temp->value = data;
+        temp->next = NULL;
+
+        if(sentinal->next == NULL) {
+            sentinal->next = current = temp;
+            current->next = sentinal;
+        }
+        else {
+            while(current->next != sentinal) {
+                current = current->next;
+            }
+            temp->next = current->next;
+            current->next = temp;
+        }
+
+        printf("Do you want to continue: ");
+        scanf("%d", &choice);
+    }
+
+
+    printf("Your Linked List is: ");
+    print(sentinal);
+
+    temp = (C_NODE*)malloc(sizeof(C_NODE));
+    printf("\nNow, we have got address[%x]\n\n", temp);
+
+    printf("Now enter a value for add in the second position of your array: ");
+    scanf("%u", &data);
+
+    temp->value = data;
+    temp->next = NULL;
+
+    current = sentinal->next;
+
+    temp->next = current->next;
+    current->next = temp;
+
+
+    printf("After insertion at second position you Linked List is: ");
+    print(sentinal);
+
+    return 0;
+}
+
+void print(C_NODE *sentinal) {
+    C_NODE *temp = sentinal->next;
+
+    while(temp->value != sentinal->value) {
+        printf("[%x]====>[%d]", temp, temp->value);
+        temp = temp->next;
+    }
+    printf("[%x]\n", sentinal->next);
+    printf("Press any key to continue........\n");
+    fflush(stdin);
+    getchar();
+}
